@@ -4,40 +4,11 @@ module Lib
 
 import Data.Ix (range)
 import qualified Data.Map as Map
-import Graphics.Gloss
-import Graphics.Gloss.Data.Picture
-import Graphics.Gloss.Data.ViewPort
-import Graphics.Gloss.Interface.IO.Interact
 import Data.Maybe (fromJust)
+import Graphics.Gloss
+import Graphics.Gloss.Interface.IO.Interact
+import Types
 
-type Location = (Int, Int)
-
-data GameResult = InProgress | PlayerWin | PlayerLoss
-
-data World = World
-  { playerLocation  :: Location
-  , startLocation   :: Location
-  , endLocation     :: Location
-  , gameResult      :: GameResult
-  , worldBoundaries :: Map.Map Location CellBoundaries
-  }
-
-data BoundaryType = WorldBoundary | Wall | AdjacentCell Location
-
-data CellBoundaries = CellBoundaries
-  { upBoundary    :: BoundaryType
-  , rightBoundary :: BoundaryType
-  , downBoundary  :: BoundaryType
-  , leftBoundary  :: BoundaryType
-  }
-
-data CellCoordinates = CellCoordinates
-  { cellCenter      :: Point
-  , cellTopLeft     :: Point
-  , cellTopRight    :: Point
-  , cellBottomLeft  :: Point
-  , cellBottomRight :: Point
-  }
 
 globalCellSize :: Float
 globalCellSize = 25
