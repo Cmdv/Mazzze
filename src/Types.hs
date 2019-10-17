@@ -8,16 +8,18 @@ import System.Random (StdGen)
 
 type Location = (Int, Int)
 
-data GameResult = InProgress | PlayerWin | PlayerLoss
-
 type Maze = Map.Map Location CellBoundaries
 
+data GameResult = GameInProgress | GameWon
+ deriving (Eq, Show)
+
 data World = World
-  { playerLocation  :: Location
-  , startLocation   :: Location
-  , endLocation     :: Location
-  , gameResult      :: GameResult
-  , worldBoundaries :: Map.Map Location CellBoundaries
+  { playerLocation       :: Location
+  , startLocation        :: Location
+  , endLocation          :: Location
+  , worldBoundaries      :: Maze
+  , gameResult           :: GameResult
+  , worldRandomGenerator :: StdGen
   }
 
 data BoundaryType = WorldBoundary | Wall | AdjacentCell Location
@@ -38,8 +40,8 @@ data CellCoordinates = CellCoordinates
   }
 
 data SearchState = SearchState
-  { randomGenerator :: StdGen
-  , locationStack :: [Location]
+  { randomGen         :: StdGen
+  , locationStack     :: [Location]
   , currentBoundaries :: Map.Map Location CellBoundaries
-  , visitedCells :: Set.Set Location
+  , visitedCells      :: Set.Set Location
   }

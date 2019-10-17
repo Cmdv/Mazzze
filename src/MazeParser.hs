@@ -13,12 +13,15 @@ import Types
 
 type MParser = M.Parsec Void Text
 
-generateRandomMaze :: StdGen -> (Int, Int) -> Map.Map Location CellBoundaries
+generateRandomMaze :: StdGen -> (Int, Int) -> (Maze, StdGen)
 generateRandomMaze gen (numRows, numColumns) =
-  currentBoundaries (execState depthFirstSearch initialState)
+  (currentBoundaries finalState, randomGen finalState)
   where
+
     (startX, g1) = randomR (0, numColumns - 1) gen
     (startY, g2) = randomR (0, numColumns - 1) g1
+
+    finalState   = execState depthFirstSearch initialState
 
     initialState :: SearchState
     initialState = SearchState
@@ -35,6 +38,7 @@ generateRandomMaze gen (numRows, numColumns) =
       Right bounds -> bounds
       _ -> error "Couldn't parse maze for some reason!"
 
+-- The game won't run until we implement this in part 5
 mazeParser :: (Int, Int) -> MParser Maze
 mazeParser (numRows, numColumns) = undefined
 
